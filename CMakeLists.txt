@@ -9,8 +9,8 @@ set(SDLIMAGE_BUILD_SHARED_LIBS ON)
 set(SDLMIXER_BUILD_SHARED_LIBS ON)
 set(SDL_SHARED ON)
 set(SDL_STATIC OFF)
-set(FLECS_STATIC OFF)
-set(FLECS_SHARD ON)
+set(FLECS_STATIC ON)
+set(FLECS_SHARD OFF)
 
 if (NOT DEFINED CMAKE_INSTALL_PREFIX_INITIALIZED_TO_DEFAULT OR NOT CMAKE_INSTALL_PREFIX_INITIALIZED_TO_DEFAULT)
     set(CMAKE_INSTALL_PREFIX "${CMAKE_CURRENT_BINARY_DIR}/install")
@@ -32,14 +32,28 @@ include(GNUInstallDirs)
 list(APPEND CMAKE_MODULE_PATH "${CatBirdRemake_SOURCE_DIR}/cmake")
 
 # add_subdirectory(...)
+add_subdirectory(ext/sdl)
+add_subdirectory(ext/sdl_image)
+add_subdirectory(ext/sdl_mixer)
 # find_package()
 
 find_package(stb)
 find_package(imgui)
+find_package(Vulkan)
+find_package(spdlog)
+find_package(flecs)
+
+add_definitions(
+        -DIMGUI_IMPL_SDL3
+        -DIMGUI_IMPL_VULKAN
+)
 
 set( SOURCE_CODE
         src/main.cpp
         src/Core/Application.cpp
+        src/Core/Contexts/VulkanContext.cpp
+        src/Core/ServiceLocator/ServiceLocator.cpp
+        src/Core/Contexts/Swapchain.cpp
 )
 
 set( DEBUGGING_CODE
@@ -58,19 +72,28 @@ install(TARGETS Aether
 
 target_include_directories(Aether PRIVATE
         inc
+        ${SDL_INCLUDE_DIRS}
+        ${SDLIMAGE_INCLUDE_DIRS}
+        ${SDLMIXER_INCLUDE_DIRS}
 )
 
 target_link_libraries(Aether PRIVATE
         # Shared
+        SDL3::SDL3-shared
+        SDL3_image::SDL3_image-shared
+        SDL3_mixer::SDL3_mixer-shared
 
         # Static
         stb::stb
         imgui::imgui
+        Vulkan::Vulkan
+        spdlog::spdlog
+        flecs::flecs_static
 )
 
-#install(TARGETS Aether SDL3-shared SDL3_image-shared SDL3_mixer-shared
-#        LIBRARY DESTINATION ${CMAKE_INSTALL_LIBDIR}
-#)
+install(TARGETS Aether SDL3-shared SDL3_image-shared SDL3_mixer-shared
+        LIBRARY DESTINATION ${CMAKE_INSTALL_LIBDIR}
+)
 
 add_custom_command(TARGET Aether POST_BUILD
         COMMAND ${CMAKE_COMMAND} -E copy_directory
