@@ -5,3 +5,5 @@ build/debug
 build/release
 build
 
+/res/shaders/*.glsl
+
