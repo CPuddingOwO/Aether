@@ -3,17 +3,18 @@
 <hr>
 <h1 style="margin-top: 2px; margin-bottom: 2px;padding-top: 0;padding-bottom: 0;">Aether</h1>
 <h4 style="margin-top: 2px; margin-bottom: 2px;padding-top: 0;padding-bottom: 0;">Vulkan & SDL3 Based</h4>
-<p style="margin-top: 2px; margin-bottom: 2px;padding-top: 0;padding-bottom: 0;">A 2D Game Engine</p>
+<p style="margin-top: 2px; margin-bottom: 2px;padding-top: 0;padding-bottom: 0;">大一牲的蹩脚项目</p>
 </div>
 
 
 ## What is Aether?
 
-Aether is a 2D game engine written in C++20 with CMake. It is based on the following concepts:
+大一牲的飞舞项目 <- (死要用Vulkan 死不用引擎是傻卵)
+用到的库和工具链
 
-* Using SDL3 and Vulkan
-* Using ImGui for UI
-* Using FLECS for ECS
-* Using C++20
-* Using CMake
-* Using Conan2
+* SDL3 with Vulkan
+* ImGui for UI
+* FLECS for ECS System
+* C++20
+* CMake28 up
+* Conan2
