@@ -1,6 +1,6 @@
 #pragma once
 
-namespace ae {
+namespace Aether {
     class Application {
     public:
         static Application& getInstance();
