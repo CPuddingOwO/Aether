@@ -1,16 +1,26 @@
 #include <Aether/Core/Application.hpp>
+#include <spdlog/spdlog.h>
+#include <iostream>
 
-using namespace ae;
+using namespace Aether;
 
 int main( int argc, char** argv ) {
+    spdlog::set_level(spdlog::level::debug);
+    spdlog::set_pattern("%^[%T] [%l] %v%$");
+    spdlog::info("\t⠄⠄⣤⠄⠄⠄⠄⠄⠄⠄⠄⠄⠄⠄⠄⣤⠄⠄⠄⠄⣤⠄⠄⠄⠄⠄⠄⠄⠄⠄⠄⠄⠄⠄⠄⠄⠄⠄⠄⠄");
+    spdlog::info("\t⠄⣿⣀⣿⠄⠄⠄⣶⣉⣉⣉⣶⠄⠄⠉⣿⠉⠉⠄⠄⣿⠉⠉⠉⣶⠄⠄⣶⣉⣉⣉⣶⠄⠄⣿⠒⠉⠉⠄⠄");
+    spdlog::info("\t⠿⠄⠄⠄⠿⠄⠄⠛⠤⠤⠤⠒⠄⠄⠄⠛⠤⠤⠄⠄⠿⠄⠄⠄⠿⠄⠄⠛⠤⠤⠤⠒⠄⠄⠿⠄⠄⠄⠄⠄");
 
     Application& app = Application::getInstance();
 
-    app.Initialize( argc, argv );
+    try {
+        app.Initialize( argc, argv );
+        app.Process();
+    }catch(std::exception& e) {
+        spdlog::error(e.what());
+    }
 
-    app.Process();
-
-    app.Terminate();
+    system("pause");
 
     return 0;
 }
