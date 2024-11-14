@@ -43,17 +43,16 @@ find_package(Vulkan)
 find_package(spdlog)
 find_package(flecs)
 
-add_definitions(
-        -DIMGUI_IMPL_SDL3
-        -DIMGUI_IMPL_VULKAN
-)
-
 set( SOURCE_CODE
         src/main.cpp
         src/Core/Application.cpp
         src/Core/Contexts/VulkanContext.cpp
         src/Core/ServiceLocator/ServiceLocator.cpp
-        src/Core/Contexts/Swapchain.cpp
+        src/Core/Services/Swapchain.cpp
+        src/Core/Render/Shader.cpp
+        src/Core/Render/RenderProcess.cpp
+        src/Core/Render/Renderer.cpp
+        src/Core/Render/Buffer.cpp
 )
 
 set( DEBUGGING_CODE
@@ -68,6 +67,11 @@ add_executable(Aether ${SOURCE_CODE})
 
 install(TARGETS Aether
         RUNTIME DESTINATION ${CMAKE_INSTALL_BINDIR}
+)
+
+target_compile_definitions( Aether PUBLIC
+        -DIMGUI_IMPL_SDL3
+        -DIMGUI_IMPL_VULKAN
 )
 
 target_include_directories(Aether PRIVATE
