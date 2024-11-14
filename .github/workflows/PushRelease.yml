@@ -1,0 +1,75 @@
+name: CI Build
+
+on:
+  push:
+    tags:        # 仅在创建 tag 时触发构建
+      - '*'
+
+jobs:
+  build:
+    strategy:
+      matrix:
+        os: [ubuntu-latest, windows-latest]
+        compiler: [clang]
+
+    runs-on: ${{ matrix.os }}
+    timeout-minutes: 50
+
+    steps:
+      # Step 1: Checkout the repository
+      - name: Checkout repository
+        uses: actions/checkout@v3
+
+      # Step 3: Install dependencies (for Linux)
+      - name: Install dependencies on Linux
+        if: matrix.os == 'ubuntu-latest'
+        run: sudo apt-get install ninja-build clang
+
+      # Step 4: Install dependencies (for Windows)
+      - name: Install dependencies on Windows
+        if: matrix.os == 'windows-latest'
+        run: |
+          choco install ninja
+          choco install llvm
+
+      # Step 5: Update Submodules
+      - name: Update submodules
+        run: git submodule update --init --recursive
+
+      # Step 6: Configure CMake
+      - name: Configure CMake
+        run: |
+          cmake -G Ninja -B build -S . -DCMAKE_BUILD_TYPE=Release
+
+      # Step 7: Build the project
+      - name: Build with Ninja
+        run: |
+          cmake --build build
+
+      # Step 8: Compress build artifacts On Linux
+      - name: Compress build artifacts on Linux
+        if: matrix.os == 'ubuntu-latest'
+        run: |
+          zip build/Aether-${{ matrix.os }}-${{ github.ref_name }}.zip build/compiled/*
+
+      # Step 8: Compress build artifacts On Windows
+      - name: Compress build artifacts on Windows
+        if: matrix.os == 'windows-latest'
+        run: |
+          Compress-Archive -Path "build/compiled/*" -DestinationPath "build/Aether-${{ matrix.os }}-${{ github.ref_name }}.zip"
+
+      # Upload artifacts for both platforms
+      - name: Upload build artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: Aether-${{ matrix.os }}-${{ github.ref_name }}
+          path: build/compiled/*
+
+      # Step 9: Release
+      - name: Upload Release
+        uses: softprops/action-gh-release@v1
+        with:
+          files: |
+            build/Aether-${{ matrix.os }}-${{ github.ref_name }}.zip
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
