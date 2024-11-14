@@ -6,12 +6,9 @@
 
 namespace Aether {
     const std::array<Vertex, 3> vertices = {
-            Vertex{0.0, -0.5},
-            Vertex{0.5, 0.5},
-            Vertex{-0.5, 0.5},
-//            Vertex{0.5, 0.25},
-//            Vertex{0.25, 0.75},
-//            Vertex{0.75, 0.75},
+            Vertex{0.5, 0.25},
+            Vertex{0.25, 0.75},
+            Vertex{0.75, 0.75},
     };
 
 
@@ -83,16 +80,16 @@ namespace Aether {
         beginInfo.setFlags(vk::CommandBufferUsageFlagBits::eOneTimeSubmit);
         cmdBuffers[curFrame].begin(beginInfo);
         {
-            cmdBuffers[curFrame].bindPipeline(vk::PipelineBindPoint::eGraphics, renderProcess->pipeline);
             vk::RenderPassBeginInfo renderPassInfo;
             vk::Rect2D renderArea({0, 0}, swapchain->info.imageExtent);
             vk::ClearValue clearValue;
-            clearValue.color = vk::ClearColorValue(0.0f, 0.0f, 0.0f, 1.0f);
+            clearValue.color = vk::ClearColorValue(0.1f, 0.1f, 0.1f, 1.0f);
             renderPassInfo.setRenderPass(renderProcess->renderPass)
                           .setRenderArea(renderArea)
                           .setFramebuffer(swapchain->framebuffers[imageIndex])
                           .setClearValues(clearValue);
             cmdBuffers[curFrame].beginRenderPass(renderPassInfo, {});
+            cmdBuffers[curFrame].bindPipeline(vk::PipelineBindPoint::eGraphics, renderProcess->pipeline);
             vk::DeviceSize offset = 0;
             cmdBuffers[curFrame].bindVertexBuffers(0, vertexBuffer->buffer, offset);
             cmdBuffers[curFrame].draw(3, 1, 0, 0);
