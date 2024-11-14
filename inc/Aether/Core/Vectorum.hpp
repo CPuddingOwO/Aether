@@ -1,10 +1,10 @@
 #pragma once
 
-//#include <SDL3/SDL.h>
+#include <SDL3/SDL.h>
 #include <imgui.h>
 #include <cmath>
 
-namespace ae {
+namespace Aether {
     template <typename T = float>
     struct Vec2 {
         T x, y;
@@ -42,10 +42,10 @@ namespace ae {
             return ImVec2(static_cast<float>(x), static_cast<float>(y));
         }
 
-        // Conversion to SDL's SDL_FPoint
-//        SDL_FPoint toSDL_FPoint() const {
-//            return SDL_FPoint{static_cast<float>(x), static_cast<float>(y)};
-//        }
+//         Conversion to SDL's SDL_FPoint
+        SDL_FPoint toSDL_FPoint() const {
+            return SDL_FPoint{static_cast<float>(x), static_cast<float>(y)};
+        }
 
         // Length (magnitude) of the vector
         T length() const {
@@ -110,9 +110,9 @@ namespace ae {
         }
 
         // Conversion to SDL's SDL_FPoint
-//        SDL_FPoint toSDL_FPoint() const {
-//            return SDL_FPoint{static_cast<float>(x), static_cast<float>(y)};
-//        }
+        SDL_FPoint toSDL_FPoint() const {
+            return SDL_FPoint{static_cast<float>(x), static_cast<float>(y)};
+        }
     };
 
     template <typename T = float>
@@ -166,8 +166,8 @@ namespace ae {
         }
 
         // Conversion to SDL's SDL_FPoint
-//        SDL_FPoint toSDL_FPoint() const {
-//            return SDL_FPoint{static_cast<float>(x), static_cast<float>(y)};
-//        }
+        SDL_FPoint toSDL_FPoint() const {
+            return SDL_FPoint{static_cast<float>(x), static_cast<float>(y)};
+        }
     };
 }
