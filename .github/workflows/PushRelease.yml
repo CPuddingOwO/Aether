@@ -53,7 +53,7 @@ jobs:
       # Step 4: Install Conan Packages
       - name: Install Conan packages
         run: |
-          ls -l
+          conan profile detect
           conan install ./conanfile.py
 
       # Step 5: Update Submodules
