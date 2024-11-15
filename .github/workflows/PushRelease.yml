@@ -35,7 +35,7 @@ jobs:
       - name: Verify Conan installation
         run: | 
           conan --version
-          conan install .
+        
 
       # Step 3: Install dependencies (for Linux)
       - name: Install dependencies on Linux
