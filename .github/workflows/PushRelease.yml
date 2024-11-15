@@ -60,14 +60,12 @@ jobs:
       - name: Install Conan packages
         if: matrix.os == 'ubuntu-latest'
         run: |
-          conan profile detect
           conan install ./conanfile.py --profile=./conan/linux_profile
 
       # Step 4: Install Conan Packages (Windows)
       - name: Install Conan packages
         if: matrix.os == 'windows-latest'
         run: |
-          conan profile detect
           conan install ./conanfile.py --profile=./conan/windows_profile
 
       # Step 5: Update Submodules
