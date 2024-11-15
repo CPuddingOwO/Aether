@@ -35,6 +35,7 @@ jobs:
       - name: Verify Conan installation
         run: | 
           conan --version
+          conan install .\conanfile.py
         
 
       # Step 3: Install dependencies (for Linux)

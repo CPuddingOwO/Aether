@@ -2,5 +2,8 @@
 <project version="4">
   <component name="VcsDirectoryMappings">
     <mapping directory="$PROJECT_DIR$" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/ext/sdl" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/ext/sdl_image" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/ext/sdl_mixer" vcs="Git" />
   </component>
 </project>
