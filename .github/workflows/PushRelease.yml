@@ -33,7 +33,9 @@ jobs:
           python -m pip install conan==2.*
 
       - name: Verify Conan installation
-        run: conan --version
+        run: | 
+          conan --version
+          conan install .
 
       # Step 3: Install dependencies (for Linux)
       - name: Install dependencies on Linux
