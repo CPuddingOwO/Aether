@@ -18,3 +18,22 @@
 * C++20
 * CMake28 up
 * Conan2
+
+## How to build?
+
+### Install Conan2
+
+```bash
+# {Project Root}/ >
+pip install conan
+conan profile detect
+conan install ./conanfile.py -s compiler=clang -s compiler.version=18 -s compiler.cppstd=20
+```
+
+### Compile with Cmake
+```bash
+# {Project Root}/ >
+cmake -S . -B build
+cmake --build build
+cmake --install build
+```

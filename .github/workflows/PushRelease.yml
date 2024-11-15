@@ -54,7 +54,7 @@ jobs:
       - name: Install Conan packages
         run: |
           conan profile detect
-          conan install ./conanfile.py
+          conan install ./conanfile.py -s compiler=clang -s compiler.version=18 -s compiler.cppstd=20
 
       # Step 5: Update Submodules
       - name: Update submodules
@@ -69,12 +69,13 @@ jobs:
       - name: Build with Ninja
         run: |
           cmake --build build
+          cmake --install build
 
       # Step 8: Compress build artifacts On Linux
       - name: Compress build artifacts on Linux
         if: matrix.os == 'ubuntu-latest'
         run: |
-          zip build/Aether-${{ matrix.os }}-${{ github.ref_name }}.zip build/compiled/*
+          zip build/Aether-${{ matrix.os }}-${{ github.ref_name }}.zip build/install/*
 
       # Step 8: Compress build artifacts On Windows
       - name: Compress build artifacts on Windows
@@ -87,7 +88,7 @@ jobs:
         uses: actions/upload-artifact@v4
         with:
           name: Aether-${{ matrix.os }}-${{ github.ref_name }}
-          path: build/compiled/*
+          path: build/install/*
 
       # Step 9: Release
       - name: Upload Release
