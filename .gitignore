@@ -1,3 +1,5 @@
-ext/*
+ext/sdl/*
+ext/sdl_mixer/*
+ext/sdl_image/*
 
 build/*

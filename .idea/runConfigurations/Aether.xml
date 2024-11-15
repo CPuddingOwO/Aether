@@ -1,5 +1,5 @@
 <component name="ProjectRunConfigurationManager">
-  <configuration default="false" name="Aether" type="CMakeRunConfiguration" factoryName="Application" REDIRECT_INPUT="false" ELEVATE="false" USE_EXTERNAL_CONSOLE="true" EMULATE_TERMINAL="false" WORKING_DIR="file://install/bin" PASS_PARENT_ENVS_2="true" PROJECT_NAME="Aether" TARGET_NAME="Aether" CONFIG_NAME="Debug" RUN_TARGET_PROJECT_NAME="Aether" RUN_TARGET_NAME="Aether">
+  <configuration default="false" name="Aether" type="CMakeRunConfiguration" factoryName="Application" REDIRECT_INPUT="false" ELEVATE="false" USE_EXTERNAL_CONSOLE="true" EMULATE_TERMINAL="false" WORKING_DIR="file://install/bin" PASS_PARENT_ENVS_2="true" PROJECT_NAME="Project" TARGET_NAME="Aether" CONFIG_NAME="Debug" RUN_TARGET_PROJECT_NAME="Project" RUN_TARGET_NAME="Aether">
     <method v="2">
       <option name="com.jetbrains.cidr.execution.CidrBuildBeforeRunTaskProvider$BuildBeforeRunTask" enabled="true" />
       <option name="CMake.Install" enabled="true" />
