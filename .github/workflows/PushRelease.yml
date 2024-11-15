@@ -48,13 +48,27 @@ jobs:
         run: |
           choco install ninja
           choco install llvm
-          
 
-      # Step 4: Install Conan Packages
+      # step 5: Check Dependencies
+      - name: Check Dependencies
+        run: |
+          clang --version
+          ninja --version
+          cmake --version
+
+      # Step 4: Install Conan Packages (Linux)
       - name: Install Conan packages
+        if: matrix.os == 'ubuntu-latest'
         run: |
           conan profile detect
-          conan install ./conanfile.py -s compiler=clang -s compiler.version=18 -s compiler.cppstd=20
+          conan install ./conanfile.py --profile=./conan/linux_profile
+
+      # Step 4: Install Conan Packages (Windows)
+      - name: Install Conan packages
+        if: matrix.os == 'windows-latest'
+        run: |
+          conan profile detect
+          conan install ./conanfile.py --profile=./conan/windows_profile
 
       # Step 5: Update Submodules
       - name: Update submodules
