@@ -27,7 +27,8 @@
 # {Project Root}/ >
 pip install conan
 conan profile detect
-conan install ./conanfile.py -s compiler=clang -s compiler.version=18 -s compiler.cppstd=20
+conan install ./conanfile.py --profile=./conan/linux_profile # OR
+# conan install ./conanfile.py --profile=./conan/windows_profile
 ```
 
 ### Compile with Cmake
