@@ -35,7 +35,6 @@ jobs:
       - name: Verify Conan installation
         run: | 
           conan --version
-          conan install .\conanfile.py
         
 
       # Step 3: Install dependencies (for Linux)
@@ -50,6 +49,12 @@ jobs:
           choco install ninja
           choco install llvm
           
+
+      # Step 4: Install Conan Packages
+      - name: Install Conan packages
+        run: |
+          ls -l
+          conan install ./conanfile.py
 
       # Step 5: Update Submodules
       - name: Update submodules
