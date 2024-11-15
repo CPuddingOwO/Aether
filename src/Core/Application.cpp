@@ -2,6 +2,7 @@
 #include <Aether/Core/ServiceLocator/ServiceLocator.hpp>
 #include <Aether/Core/Contexts/AppContext.hpp>
 #include <Aether/Core/Contexts/VulkanContext.hpp>
+#include <Aether/Core/Services/Clock.hpp>
 
 #include <SDL3/SDL.h>
 #include <SDL3_mixer/SDL_mixer.h>
@@ -60,12 +61,7 @@ namespace Aether {
             },
             .rendererProp = {
                     .clearColor = { 0.3f, 0.5f, 0.4f, 1.0f },
-            },
-            .clock = {
-                    .fps = 60.0f,
-                    .renderDt = 1000.f / 60.0f,
-                    .updateDt = 1000.f / 20.0f,
-                    },
+            }
         };
 
         ServiceLocator::Provide<AppContext>( appContext );
@@ -176,6 +172,17 @@ namespace Aether {
             SDL_DestroyProperties(props);
         }
 
+        {
+            // Init Clock
+            auto clock = std::make_shared<Clock>();
+            clock->logic.target_fps = 20.0f;
+            clock->render.target_fps = 60.0f;
+
+            clock->logic.dt = 1000.0f / clock->logic.target_fps;
+            clock->render.dt = 1000.0f / clock->render.target_fps;
+            ServiceLocator::Provide<Clock>( clock );
+        }
+
     }
 
 
@@ -185,28 +192,39 @@ namespace Aether {
         auto appContext = ServiceLocator::Get<AppContext>();
         auto& renderer = ServiceLocator::Get<VulkanContext>()->renderer;
 
-            while (appContext->state.isRunning) {
-                {
-                    // Process Events
-                    SDL_Event event;
-                    while (SDL_PollEvent(&event)) {
-                        switch (event.type) {
-                            case SDL_EVENT_QUIT:
+        while (appContext->state.isRunning) {
+            auto clock = ServiceLocator::Get<Clock>();
+            clock->render.t1 = std::chrono::steady_clock::now();
+
+            {
+                // Process Events
+                SDL_Event event;
+                while (SDL_PollEvent(&event)) {
+                    switch (event.type) {
+                        case SDL_EVENT_QUIT:
+                            appContext->state.isRunning = false;
+                            break;
+                        case SDL_EVENT_KEY_DOWN:
+                            if (event.key.key == SDLK_ESCAPE) {
                                 appContext->state.isRunning = false;
-                                break;
-                            case SDL_EVENT_KEY_DOWN:
-                                if (event.key.key == SDLK_ESCAPE) {
-                                    appContext->state.isRunning = false;
-                                }
-                                break;
-                            default:
-                                break;
-                        }
+                            }
+                            break;
+                        default:
+                            break;
                     }
                 }
-
-                renderer->DrawTrangle();
             }
+
+            renderer->DrawTrangle();
+
+            auto TimeStampA = std::chrono::system_clock::now();
+            std::chrono::duration<double, std::milli> work_time = clock->render.t1 - clock->render.t2;
+
+            if (work_time.count() < clock->render.dt) {
+                std::this_thread::sleep_for(std::chrono::milliseconds(static_cast<long long>(clock->render.dt - work_time.count())));
+            }
+            clock->render.t2 = std::chrono::steady_clock::now();
+        }
     }
 
     void Application::Terminate() {

@@ -26,20 +26,11 @@ namespace Aether {
         Vec4<float> clearColor;
     };
 
-    struct Clock {
-        float fps;
-        float renderDt;
-        float updateDt;
-        Uint64 t1;
-        Uint64 t2;
-    };
-
 
     struct AppContext {
         AppState state{};
         WindowProperties windowProp;
         RendererProperties rendererProp;
-        Clock clock{};
 
         SDL_Window* window{};
         SDL_Renderer* renderer{};
