@@ -7,9 +7,9 @@ using namespace Aether;
 int main( int argc, char** argv ) {
     spdlog::set_level(spdlog::level::debug);
     spdlog::set_pattern("%^[%T] [%l] %v%$");
-    spdlog::info("\t⠄⠄⣤⠄⠄⠄⠄⠄⠄⠄⠄⠄⠄⠄⠄⣤⠄⠄⠄⠄⣤⠄⠄⠄⠄⠄⠄⠄⠄⠄⠄⠄⠄⠄⠄⠄⠄⠄⠄⠄");
-    spdlog::info("\t⠄⣿⣀⣿⠄⠄⠄⣶⣉⣉⣉⣶⠄⠄⠉⣿⠉⠉⠄⠄⣿⠉⠉⠉⣶⠄⠄⣶⣉⣉⣉⣶⠄⠄⣿⠒⠉⠉⠄⠄");
-    spdlog::info("\t⠿⠄⠄⠄⠿⠄⠄⠛⠤⠤⠤⠒⠄⠄⠄⠛⠤⠤⠄⠄⠿⠄⠄⠄⠿⠄⠄⠛⠤⠤⠤⠒⠄⠄⠿⠄⠄⠄⠄⠄");
+    spdlog::info("⠄⠄⣤⠄⠄⠄⠄⠄⠄⠄⠄⠄⠄⠄⠄⣤⠄⠄⠄⠄⣤⠄⠄⠄⠄⠄⠄⠄⠄⠄⠄⠄⠄⠄⠄⠄⠄⠄⠄⠄");
+    spdlog::info("⠄⣿⣀⣿⠄⠄⠄⣶⣉⣉⣉⣶⠄⠄⠉⣿⠉⠉⠄⠄⣿⠉⠉⠉⣶⠄⠄⣶⣉⣉⣉⣶⠄⠄⣿⠒⠉⠉⠄⠄");
+    spdlog::info("⠿⠄⠄⠄⠿⠄⠄⠛⠤⠤⠤⠒⠄⠄⠄⠛⠤⠤⠄⠄⠿⠄⠄⠄⠿⠄⠄⠛⠤⠤⠤⠒⠄⠄⠿⠄⠄⠄⠄⠄");
 
     Application& app = Application::getInstance();
 
