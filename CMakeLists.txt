@@ -18,15 +18,15 @@ if (NOT DEFINED CMAKE_INSTALL_PREFIX_INITIALIZED_TO_DEFAULT OR NOT CMAKE_INSTALL
     set(CMAKE_INSTALL_PREFIX "${CMAKE_CURRENT_BINARY_DIR}/install")
 endif ()
 
-if ("${CMAKE_CXX_COMPILER_ID}" MATCHES "Clang")
-    set(CMAKE_CXX_FLAGS_DEBUG "${CMAKE_CXX_FLAGS_DEBUG} -g")
-    set(CMAKE_SHARED_LINKER_FLAGS_DEBUG "${CMAKE_SHARED_LINKER_FLAGS_DEBUG} -Wl,/DEBUG -Wl,/pdb:${CMAKE_BINARY_DIR}/${CMAKE_PROJECT_NAME}.pdb")
-    set(CMAKE_EXE_LINKER_FLAGS_DEBUG "${CMAKE_EXE_LINKER_FLAGS_DEBUG} -Wl,/DEBUG -Wl,/pdb:${CMAKE_BINARY_DIR}/${CMAKE_PROJECT_NAME}.pdb")
-endif()
+#if ("${CMAKE_CXX_COMPILER_ID}" MATCHES "Clang")
+#    set(CMAKE_CXX_FLAGS_DEBUG "${CMAKE_CXX_FLAGS_DEBUG} -g")
+#    set(CMAKE_SHARED_LINKER_FLAGS_DEBUG "${CMAKE_SHARED_LINKER_FLAGS_DEBUG} -Wl,/DEBUG -Wl,/pdb:${CMAKE_BINARY_DIR}/${CMAKE_PROJECT_NAME}.pdb")
+#    set(CMAKE_EXE_LINKER_FLAGS_DEBUG "${CMAKE_EXE_LINKER_FLAGS_DEBUG} -Wl,/DEBUG -Wl,/pdb:${CMAKE_BINARY_DIR}/${CMAKE_PROJECT_NAME}.pdb")
+#endif()
 
 if (CMAKE_BUILD_TYPE STREQUAL "Release")
-    set(CMAKE_CXX_FLAGS_DEBUG "${CMAKE_CXX_FLAGS_DEBUG} -O1")
-    set(CMAKE_C_FLAGS_DEBUG "${CMAKE_C_FLAGS_DEBUG} -O1")
+    list(APPEND CMAKE_CXX_FLAGS "-O1")
+    list(APPEND CMAKE_C_FLAGS "-O1")
 endif ()
 
 include(GNUInstallDirs)
@@ -55,6 +55,7 @@ set( SOURCE_CODE
         src/Core/Render/RenderProcess.cpp
         src/Core/Render/Renderer.cpp
         src/Core/Render/Buffer.cpp
+        src/Core/Services/Clock.cpp
 )
 
 set( DEBUGGING_CODE
@@ -72,8 +73,8 @@ install(TARGETS Aether
 )
 
 target_compile_definitions( Aether PUBLIC
-        -DIMGUI_IMPL_SDL3
-        -DIMGUI_IMPL_VULKAN
+#        -DIMGUI_IMPL_SDL3
+#        -DIMGUI_IMPL_VULKAN
 )
 
 target_include_directories(Aether PRIVATE
