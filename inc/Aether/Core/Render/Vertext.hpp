@@ -19,7 +19,7 @@ namespace Aether {
         static vk::VertexInputBindingDescription GetBinding() {
             vk::VertexInputBindingDescription binding;
             binding.setBinding(0)
-                   .setInputRate(vk::VertexInputRate::eInstance)
+                   .setInputRate(vk::VertexInputRate::eVertex)
                     .setStride(sizeof(Vertex));
             return binding;
         }
